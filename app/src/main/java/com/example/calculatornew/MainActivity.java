@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.itis.libs.parserng.android.expressParser.MathExpression;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,38 +97,7 @@ public class MainActivity extends AppCompatActivity {
         operand = findViewById(R.id.operand);
         result = findViewById(R.id.result);
         String res = operand.getText().toString();
-        int posOperand, firstNum, secondNum, resultNum;
-        if(res.contains("/")){
-            posOperand = operand.getText().toString().indexOf("/");
-            firstNum = Integer.parseInt(res.substring(0, posOperand));
-            secondNum = Integer.parseInt(res.substring(posOperand + 1));
-            operand.setText("");
-            resultNum = firstNum / secondNum;
-            result.setText(resultNum + "");
-        }
-        else if(res.contains("*")){
-            posOperand = operand.getText().toString().indexOf("*");
-            firstNum = Integer.parseInt(res.substring(0, posOperand));
-            secondNum = Integer.parseInt(res.substring(posOperand + 1));
-            operand.setText("");
-            resultNum = firstNum * secondNum;
-            result.setText(resultNum + "");
-        }
-        else if(res.contains("-")){
-            posOperand = operand.getText().toString().lastIndexOf("-");
-            firstNum = Integer.parseInt(res.substring(0, posOperand));
-            secondNum = Integer.parseInt(res.substring(posOperand + 1));
-            operand.setText("");
-            resultNum = firstNum - secondNum;
-            result.setText(resultNum + "");
-        }
-        else if(res.contains("+")){
-            posOperand = operand.getText().toString().indexOf("+");
-            firstNum = Integer.parseInt(res.substring(0, posOperand));
-            secondNum = Integer.parseInt(res.substring(posOperand + 1));
-            operand.setText("");
-            resultNum = firstNum + secondNum;
-            result.setText(resultNum + "");
-        }
+        MathExpression exprNum = new MathExpression(res);
+        result.setText(exprNum.solve());
     }
 }
