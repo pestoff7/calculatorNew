@@ -16,10 +16,16 @@ public class MainActivity extends AppCompatActivity {
             division, multi, minus, plus;
     EditText operand;
     TextView result;
+    String resNumExp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        result = findViewById(R.id.result);
+        if (savedInstanceState != null && savedInstanceState.containsKey("str")){
+            resNumExp = savedInstanceState.getString("str");
+            result.setText(resNumExp);
+        }
     }
 
     public void onClickNum(View v){
@@ -96,8 +102,16 @@ public class MainActivity extends AppCompatActivity {
         res = findViewById(R.id.res);
         operand = findViewById(R.id.operand);
         result = findViewById(R.id.result);
-        String res = operand.getText().toString();
-        MathExpression exprNum = new MathExpression(res);
-        result.setText(exprNum.solve());
+        String resNum;
+        resNum = operand.getText().toString();
+        MathExpression exprNum = new MathExpression(resNum);
+        resNumExp = exprNum.solve();
+        result.setText(resNumExp);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle){
+        bundle.putString("str", resNumExp);
+        super.onSaveInstanceState(bundle);
     }
 }
